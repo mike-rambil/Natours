@@ -36,13 +36,16 @@ app.post('/api/v1/tours', (req, res) => {
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
-    (req, err) => {
-      res.status(201).json({
-        status: 'success',
-        data: {
-          tour: newTour,
-        },
-      });
+    (err) => {
+      if (err) {
+        res.status(500).json({ message: 'Error writing data to file' });
+      } else {
+        res.status(201).json({
+          data: {
+            tour: newTour,
+          },
+        });
+      }
     }
   );
 });
