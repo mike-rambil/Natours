@@ -128,8 +128,8 @@ const updateUser = (req, res) => {
 
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 app.route('/api/v1/tours/:id').get(getTour).delete(deleteTour);
-app.route('api//v1/users').get(getAllUsers).post(createUsers);
-app.route('api//v1/user/:id').get(getUser).patch(updateUser).delete(deleteUser);
+app.route('/api/v1/users').get(getAllUsers).post(createUsers);
+app.route('/api/v1/user/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 // 5) START SERVER
 const port = 3000;
