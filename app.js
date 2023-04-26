@@ -134,5 +134,6 @@ app.route('/api/v1/user/:id').get(getUser).patch(updateUser).delete(deleteUser);
 // 5) START SERVER
 const port = 3000;
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`App runnning on port ${port} ....`);
 });
