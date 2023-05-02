@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv');
+const app = require('./app');
 
 dotenv.config({ path: './config.env' });
 
-// const DB = process.env.DATABASE.replace(
-//   '<PASSWORD>',
-//   process.env.DATABASE_PASSWORD
-// );
-const DB =
-  'mongodb+srv://mike:eILx7luQJQnyTaAc@cluster0.dsrld9r.mongodb.net/natours?retryWrites=true&w=majority';
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
+
 console.log(DB);
 
 mongoose
@@ -23,8 +23,6 @@ mongoose
     console.log('DB Connection Successful...');
   })
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
-
-const app = require('./app');
 
 const port = process.env.PORT;
 app.listen(port, () => {
