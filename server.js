@@ -9,9 +9,6 @@ const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
-
-// const DB =
-//   'mongodb+srv://cluster0.dsrld9r.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority';
 console.log(DB);
 
 mongoose
@@ -41,6 +38,19 @@ const tourSchema = new mongoose.Schema({
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
+
+const testTour = new Tour({
+  name: 'The Park Camper',
+  price: 433,
+  rating: 4.2,
+});
+
+testTour
+  .save()
+  .then((doc) => {
+    console.log(doc);
+  })
+  .catch((err) => console.log(err));
 
 const port = process.env.PORT;
 app.listen(port, () => {
