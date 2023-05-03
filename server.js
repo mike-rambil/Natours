@@ -24,6 +24,24 @@ mongoose
   })
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
+const tourSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'A tour must have a name'],
+    unique: true,
+  },
+  rating: {
+    type: Number,
+    default: 4.5,
+  },
+  price: {
+    type: Number,
+    required: [true, 'A tour must have a price'],
+  },
+});
+
+const Tour = mongoose.model('Tour', tourSchema);
+
 const port = process.env.PORT;
 app.listen(port, () => {
   // eslint-disable-next-line no-console
