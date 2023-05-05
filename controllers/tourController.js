@@ -30,9 +30,6 @@ exports.aliasTopTours = (req, res, next) => {
   req.query.sort = '-ratingAverage,price';
   req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
 
-  if (req.query) {
-    console.log(req.query);
-  }
   next();
 };
 
@@ -101,7 +98,6 @@ exports.getAllTours = async (req, res) => {
       data: { tours },
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       status: 'fail',
       message: err,
@@ -231,6 +227,7 @@ exports.getMonthlyPlan = async (req, res) => {
       {
         $match: {
           startDates: {
+            // eslint-disable-next-line no-octal
             $gte: new Date(`${year}` - 01 - 01),
             $lte: new Date(`${year}` - 12 - 31),
           },

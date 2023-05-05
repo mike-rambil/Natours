@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
+// const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -111,6 +111,7 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 tourSchema.post(/^find/, function (docs, next) {
+  // eslint-disable-next-line no-console
   console.log(`Query took ${Date.now() - this.start} milliseconds`);
   next();
 });
@@ -118,7 +119,7 @@ tourSchema.post(/^find/, function (docs, next) {
 //AGGREGRATION Middleware
 tourSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ match: { secretTour: { $ne: true } } });
-  console.log(this.pipeline());
+  // console.log(this.pipeline());
   next();
 });
 
