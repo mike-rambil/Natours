@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv');
+
+process.on('uncaughtException', (err) => {
+  console.log('Uncaught Exception! Shutting down....');
+  console.log(err);
+  process.exit(1);
+});
+
 const app = require('./app');
 
 dotenv.config({ path: './config.env' });
@@ -22,7 +29,15 @@ mongoose
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
 const port = process.env.PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`App runnning on port ${port} ....`);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED Rejection....Shutting down');
+  console.log(err);
+  server.close(() => {
+    process.exit(1);
+  });
 });
