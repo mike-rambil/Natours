@@ -9,11 +9,14 @@ const handleJWTExpiredError = () =>
 const handleJWTError = () =>
   new AppError('Invalid token. Please log in again!', 401);
 const handleDuplicateFieldsDB = (err) => {
-  const value = err.errmsg.match(/["'](\\?.)*?\1/)[0];
-
-  const message = `Duplicate Field Value ${value}. Please use another value.`;
+  const value = (err.errmsg && err.errmsg.match(/["'](\\?.)*?\1/)) || [];
+  const message =
+    value.length > 0
+      ? `Duplicate Field Value ${value[0]}. Please use another value.`
+      : 'Duplicate field value. Please use another value.';
   return new AppError(message, 400);
 };
+
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalid input data. ${errors.join('. ')}`;
