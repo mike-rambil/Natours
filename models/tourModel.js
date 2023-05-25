@@ -73,15 +73,15 @@ const tourSchema = new mongoose.Schema(
       select: false,
     },
     startDates: [Date],
-    secretTour: {
-      type: Boolean,
-      default: false,
-    },
+    // secretTour: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  }
+  // {
+  //   toJSON: { virtuals: true },
+  //   toObject: { virtuals: true },
+  // }
 );
 
 tourSchema.virtual('durationWeeks').get(function () {
@@ -103,25 +103,25 @@ tourSchema.pre('save', function (next) {
 //   next();
 // });
 
-tourSchema.pre(/^find/, function (next) {
-  // tourSchema.pre('find', function (next) {
-  this.find({ secretTour: { $ne: true } });
-  this.start = Date.now();
-  next();
-});
+// tourSchema.pre(/^find/, function (next) {
+//   // tourSchema.pre('find', function (next) {
+//   this.find({ secretTour: { $e: false } });
+//   this.start = Date.now();
+//   next();
+// });
 
-tourSchema.post(/^find/, function (docs, next) {
-  // eslint-disable-next-line no-console
-  console.log(`Query took ${Date.now() - this.start} milliseconds`);
-  next();
-});
+// tourSchema.post(/^find/, function (docs, next) {
+//   // eslint-disable-next-line no-console
+//   console.log(`Query took ${Date.now() - this.start} milliseconds`);
+//   next();
+// });
 
 //AGGREGRATION Middleware
-tourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ match: { secretTour: { $ne: true } } });
-  // console.log(this.pipeline());
-  next();
-});
+// tourSchema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({ match: { secretTour: { $ne: true } } });
+//   // console.log(this.pipeline());
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

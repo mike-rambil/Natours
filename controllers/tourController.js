@@ -41,7 +41,9 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     .limitFields()
     .paginate();
   const tours = await features.query;
-
+  if (!tours) {
+    return next(new AppError('No tours found', 404));
+  }
   //Send RESPONSE
   res.status(200).json({
     status: 'success',
@@ -51,12 +53,6 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getTour = catchAsync(async (req, res, next) => {
-  // const id = req.params.id * 1;
-  // const tour = tours.find((el) => el.id === id);
-  //   status: 'success',
-  //   tour,
-  // });
-  // res.status(200).json({
 
   const tour = await Tour.findById(req.params.id);
 
