@@ -153,6 +153,13 @@ tourSchema.post('save', (doc, next) => {
 //   console.log(`Query took ${Date.now() - this.start} milliseconds`);
 //   next();
 // });
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v',
+  });
+  next();
+});
 
 // // AGGREGRATION Middleware
 // tourSchema.pre('aggregate', function (next) {
