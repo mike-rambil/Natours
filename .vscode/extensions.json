@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "tabnine.tabnine-vscode",
+    "formulahendry.auto-rename-tag",
+    "deque-systems.vscode-axe-linter",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
+    "anteprimorac.html-end-tag-labels",
+    "htmlhint.vscode-htmlhint",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint"
+  ]
+}
