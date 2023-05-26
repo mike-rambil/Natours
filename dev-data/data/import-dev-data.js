@@ -23,9 +23,7 @@ mongoose
   .catch((err) => console.log('Error connecting to MongoDB Atlas:', err));
 
 //READ FILE
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 const importData = async () => {
   try {
