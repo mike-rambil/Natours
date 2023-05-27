@@ -119,6 +119,13 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+//Virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'tour',
+});
+
 //DOCUMENT MIDDLEWARE runs before .save() || .create()
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
@@ -142,7 +149,7 @@ tourSchema.post('save', (doc, next) => {
 });
 
 // tourSchema.pre(/^find/, function (next) {
-//   // tourSchema.pre('find', function (next) {
+// tourSchema.pre('find', function (next) {
 //   this.find({ secretTour: { $e: false } });
 //   this.start = Date.now();
 //   next();
