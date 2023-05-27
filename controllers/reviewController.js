@@ -18,7 +18,7 @@ exports.createReview = catchAsync(async (req, res, next) => {
 
   const newReview = await Review.create(req.body);
   res.status(201).json({
-    success: true,
+    success: 'success',
     data: newReview,
   });
 });
