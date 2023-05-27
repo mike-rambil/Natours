@@ -78,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  //Check for cookie
+  // Check for cookie
   let token;
   if (
     req.headers.authorization &&
@@ -86,29 +86,44 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(' ')[1];
   }
-  //Validate Cookie
+
+  // Validate token
   if (!token) {
-    return next(new AppError('You are not logged in! Please log in!', 401));
-  }
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  // console.log(decoded);
-  //Check if user exists
-  const freshUser = await User.findById(decoded.id);
-  if (!freshUser) {
-    return next(
-      new AppError('The user belonging to this token does no longer exist', 401)
-    );
+    return next(new AppError('You are not logged in! Please log in.', 401));
   }
 
-  //Check for password changed after token was issued
-  if (freshUser.changedPasswordAfter(decoded.iat)) {
-    return next(
-      new AppError('User recently changed password! Please log in again', 401)
-    );
+  try {
+    // Verify token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // Check if user exists
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return next(
+        new AppError('The user belonging to this token does not exist.', 401)
+      );
+    }
+
+    // Check if password was changed after the token was issued
+    if (user.changedPasswordAfter(decoded.iat)) {
+      return next(
+        new AppError(
+          'User recently changed password! Please log in again.',
+          401
+        )
+      );
+    }
+
+    // Set the authenticated user in res.locals
+    console.log('Authenticated user:', user);
+    req.user = user;
+
+    // res.locals.user = req.user;
+
+    next();
+  } catch (error) {
+    return next(new AppError('Invalid token.', 401));
   }
-  //call for next to grant access
-  req.user = freshUser;
-  next();
 });
 
 exports.restrictTo =
@@ -116,7 +131,7 @@ exports.restrictTo =
   (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('You do not have permissions to access this route!', 403)
+        new AppError('You do not have permission to access this route!', 403)
       );
     }
     next();
