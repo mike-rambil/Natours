@@ -19,6 +19,11 @@ exports.createUsers = (req, res) => {
   });
 };
 
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -34,7 +39,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-
   res.status(200).json({
     status: 'success',
     data: {
