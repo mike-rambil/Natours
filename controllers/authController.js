@@ -115,7 +115,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     }
 
     // Set the authenticated user in res.locals
-    console.log('Authenticated user:', user);
     req.user = user;
 
     // res.locals.user = req.user;

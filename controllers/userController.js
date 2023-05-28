@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 // const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -20,30 +21,14 @@ exports.getAllUsers = catchAsync(async (req, res) => {
     data: { user },
   });
 });
-exports.getUser = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'This route is not yet defined',
-  });
-};
+
 exports.createUsers = (req, res) => {
   res.status(200).json({
     status: 'success',
-    message: 'This route is not yet defined',
+    message: 'This route is not yet defined. Please use sign up instead.',
   });
 };
-exports.deleteUser = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'This route is not yet defined',
-  });
-};
-exports.updateUser = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'This route is not yet defined',
-  });
-};
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -76,3 +61,8 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+//Do NOT update passwords with this
+exports.deleteUser = factory.deleteOne(User);
+exports.updateUser = factory.updateOne(User);
+exports.getUser = factory.getOne(User);
