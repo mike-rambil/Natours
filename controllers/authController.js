@@ -15,6 +15,7 @@ const parseDurationString = (durationString) => {
   return milliseconds;
 };
 
+//  TOKEN
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const expiresIn = process.env.JWT_COOKIE_EXPIRES_IN;
