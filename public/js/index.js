@@ -1,1 +1,3 @@
-console.log('Hello World!');
+import './login.js';
+
+console.log('hello from parcel');
