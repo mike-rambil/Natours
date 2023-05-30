@@ -137,3 +137,47 @@ exports.restrictTo =
     }
     next();
   };
+
+// Only for rendered pages, no errors are thrown!
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1) Verifies token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // 2) Check if user exists
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return next(
+        new AppError('The user belonging to this token does not exist.', 401)
+      );
+    }
+
+    // 3) Check if password was changed after the token was issued
+    if (user.changedPasswordAfter(decoded.iat)) {
+      return next(
+        new AppError(
+          'User recently changed password! Please log in again.',
+          401
+        )
+      );
+    }
+    // tHERE IS A LOGGED IN USER!
+    res.locals.user = user;
+    return next();
+  }
+  next();
+});
+
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to access this route!', 403)
+      );
+    }
+    next();
+  };
