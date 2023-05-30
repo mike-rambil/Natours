@@ -5,6 +5,8 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
+const app = express();
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
@@ -12,9 +14,15 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
-const app = express();
-
 //* 1) ----------------------MIDDLEWARES-------------------------
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+//--Pug setup
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views')); // OR app.use(express.static(`${__dirname}/public`));
+
+app.use(morgan('dev'));
 
 //--CORS Middleware
 app.use(
@@ -36,16 +44,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
-
-//--Server static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-//--Pug setup
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views')); // OR app.use(express.static(`${__dirname}/public`));
-
-//--Morgan Middleware
-app.use(morgan('dev'));
 
 //--BodyParser Middleware
 app.use(express.json());
