@@ -11,9 +11,12 @@ const login = async (email, password) => {
         email,
         password,
       },
-      withCredentials: true,
     });
     console.log(res);
+    // console.log(res.data.token);
+    // Save the JWT token as a cookie
+    const token = res.data.token;
+    document.cookie = `jwt=${token}`;
   } catch (err) {
     console.log(err.response.data);
   }
