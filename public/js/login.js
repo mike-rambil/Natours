@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { showAlert } from './alert';
+
 axios.defaults.withCredentials = true;
 
 const login = async (email, password) => {
@@ -12,7 +14,7 @@ const login = async (email, password) => {
       },
     });
     if (res.data.status === 'success') {
-      alert('Logged in successfully');
+      showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
@@ -23,7 +25,7 @@ const login = async (email, password) => {
     const token = res.data.token;
     document.cookie = `jwt=${token}`;
   } catch (err) {
-    alert(err.response.data.message);
+    showAlert('error', err.response.data.message);
   }
 };
 
