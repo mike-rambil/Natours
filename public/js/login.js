@@ -1,4 +1,5 @@
 /* eslint-disable */
+axios.defaults.withCredentials = true;
 
 const login = async (email, password) => {
   console.log(email, password);

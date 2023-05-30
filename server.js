@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv');
 
+// -----------Uncaught Exception Handler--------------
 process.on('uncaughtException', (err) => {
   console.log('Uncaught Exception! Shutting down....');
   console.log(err);
@@ -10,13 +11,13 @@ process.on('uncaughtException', (err) => {
 
 const app = require('./app');
 
+// -----------Config.env Path--------------
 dotenv.config({ path: './config.env' });
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
-// console.log(DB);
 
 mongoose
   .connect(DB, {
