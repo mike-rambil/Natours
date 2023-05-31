@@ -76,6 +76,14 @@ exports.login = catchAsync(async (req, res, next) => {
   // const token = signToken(user._id);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 exports.protect = catchAsync(async (req, res, next) => {
   // Check for cookie
   let token;
@@ -139,37 +147,41 @@ exports.restrictTo =
   };
 
 // Only for rendered pages, no errors are thrown!
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
+exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies.jwt) {
-    // 1) Verifies token
-    const decoded = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRET
-    );
-
-    // 2) Check if user exists
-    const user = await User.findById(decoded.id);
-    if (!user) {
-      return next(
-        new AppError('The user belonging to this token does not exist.', 401)
+    try {
+      // 1) Verifies token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
       );
-    }
 
-    // 3) Check if password was changed after the token was issued
-    if (user.changedPasswordAfter(decoded.iat)) {
-      return next(
-        new AppError(
-          'User recently changed password! Please log in again.',
-          401
-        )
-      );
+      // 2) Check if user exists
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        return next(
+          new AppError('The user belonging to this token does not exist.', 401)
+        );
+      }
+
+      // 3) Check if password was changed after the token was issued
+      if (user.changedPasswordAfter(decoded.iat)) {
+        return next(
+          new AppError(
+            'User recently changed password! Please log in again.',
+            401
+          )
+        );
+      }
+      // THERE IS A LOGGED IN USER!
+      res.locals.user = user;
+      return next();
+    } catch (err) {
+      return next();
     }
-    // tHERE IS A LOGGED IN USER!
-    res.locals.user = user;
-    return next();
   }
   next();
-});
+};
 
 exports.restrictTo =
   (...roles) =>
