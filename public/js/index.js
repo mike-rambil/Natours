@@ -1,5 +1,5 @@
 /* eslint-disable */
-import '../../node_modules/@babel/polyfill';
+import '@babel/polyfill';
 
 import { login } from './login';
 
