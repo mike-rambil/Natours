@@ -5,11 +5,11 @@ import 'regenerator-runtime/runtime';
 import { login, logout } from './login';
 
 // DOM ELEMENTS
-const loginForm = document.querySelector('.form');
+const loginFormElement = document.querySelector('.form');
 const logOutBtn = document.querySelector('.nav__el--logout');
 
-if (loginForm)
-  loginForm.addEventListener('submit', (e) => {
+if (loginFormElement)
+  loginFormElement.addEventListener('submit', (e) => {
     e.preventDefault();
     // VALUES
     const email = document.getElementById('email').value;
