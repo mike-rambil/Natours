@@ -16,7 +16,9 @@ const viewRouter = require('./routes/viewRoutes');
 
 //* 1) ----------------------MIDDLEWARES-------------------------
 
+//--Serving Static Files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'dist')));
 
 //--Pug setup
 app.set('view engine', 'pug');
