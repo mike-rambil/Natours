@@ -3,7 +3,3 @@ node_modules/
 
 # Ignore .env file
 config.env
-
-# Ignore webpack cache
-.webpack/
-.webpack_cache/

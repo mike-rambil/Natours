@@ -1323,3 +1323,83 @@ body {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
+
+/* ChatGPT */
+@media only screen and (max-width: 768px) {
+  /* Styles for screens up to 768px width */
+  body {
+    padding: 2rem;
+  }
+
+  .main {
+    padding: 4rem 3rem;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  .heading-primary {
+    font-size: 3.5rem;
+  }
+
+  .heading-tertirary {
+    font-size: 2rem;
+    right: 1rem;
+    bottom: 0.5rem;
+    width: 80%;
+  }
+
+  .header {
+    height: auto;
+    padding: 2rem;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  
+  .header__logo {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .section-header {
+    height: auto;
+    clip-path: none;
+    -webkit-clip-path: none;
+  }
+
+  .header__hero {
+    height: auto;
+  }
+
+  .header__hero-img {
+    -o-object-position: 50% 50%;
+    object-position: 50% 50%;
+  }
+
+  .heading-box {
+    bottom: 20%;
+    top: auto;
+  }
+
+  .section-description {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .section-description > * {
+    padding: 0 2rem;
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+
+  .overview-box__group:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}
