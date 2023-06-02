@@ -37,6 +37,9 @@ export const logout = async () => {
       method: 'GET',
       url: 'http://127.0.0.1:3000/api/v1/users/logout',
     });
+    console.log('Logout')
+    const token = res.data.token;
+    document.cookie = `jwt=${token}`;
     if (res.data.status === 'success') location.reload(true);
   } catch (err) {
     showAlert('error', err.response.data.message);
