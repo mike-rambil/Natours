@@ -32,7 +32,7 @@ mongoose
 const port = process.env.PORT;
 const server = app.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log(`App runnning on port ${port} ....`);
+  console.log(`App running on port ${port} ....`);
 });
 
 // -----------------unhandledRejection-----------------
