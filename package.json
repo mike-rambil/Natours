@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "prod": "set NODE_ENV=production && nodemon server.js",
     "debug": "ndb server.js",
     "build:js": "webpack --config webpack.config.js",
@@ -46,5 +47,8 @@
     "prettier": "^2.8.8",
     "webpack": "^5.85.0",
     "webpack-cli": "^5.1.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
