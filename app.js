@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 // eslint-disable-next-line import/no-extraneous-dependencies
+const compression = require('compression');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -24,6 +25,11 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views')); // OR app.use(express.static(`${__dirname}/public`));
 
+
+//Compression
+app.use(compression());
+
+// --Morgan
 app.use(morgan('dev'));
 
 //--CORS Middleware

@@ -8,6 +8,10 @@ module.exports = {
     filename: 'bundle.js',
   },
   module: {
+    cache: {
+      type: 'filesystem',
+      cacheDirectory: '/webpack_cache',
+    },
     rules: [
       {
         test: /\.js$/,

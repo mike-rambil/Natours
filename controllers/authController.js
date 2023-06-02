@@ -123,7 +123,6 @@ exports.protect = catchAsync(async (req, res, next) => {
       );
     }
 
-    // console.log(user);
     // Set the authenticated user in res.locals
     req.user = user;
 
